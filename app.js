@@ -3,11 +3,9 @@ const express = require('express');
 const nunjucks = require('nunjucks');
 const body_parser = require('body-parser');
 const axios = require('axios');
-const apicache = require('apicache');
 const rp = require('request-promise');
 
 var app = express();
-var cache = apicache.middleware;
 
 app.use(body_parser.urlencoded({
 	extended: false

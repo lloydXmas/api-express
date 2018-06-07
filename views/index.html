@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<style>
+		body {
+			background-color: #f8f9fa;
+		}
+
+		#qresults {
+			overflow: scroll;
+		}
+
+		pre {
+			font-size: .75rem;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row mt-4">
+			<h1 class="display-4 pb-4">The MovieDB API Query</h1>
+			<form onsubmit="return getData()" action="/api" id="movieForm" class="w-100 p-2">
+				<div class="row">
+					<div class="col-sm-6 col-12">
+						<label for="title">Search For</label>
+						<input class="form-control mb-2" id="title" type="text" name="qstring" placeholder="Film or Show Title">
+					</div>
+					<div class="col-sm-4 col-12">
+						<label for="search-type">Search Type</label>
+						<select class="form-control mb-2" id="search-type" name="search">
+                <option value="movie">Movie</option>
+                <option value="tv">TV Show</option>
+            </select>
+					</div>
+					<div class="col-sm-2 col-12 d-flex align-items-end">
+						<button type="submit" class="btn btn-primary mb-2">Search</button>
+					</div>
+				</div>
+			</form>
+			<div class="col-12">
+				<div class="row mt-4" id="res"></div>
+			</div>
+		</div>
+
+		<script>
+			function getData() {
+				var data = $('#movieForm').serialize();
+
+				var jqxhr = $.ajax({
+						url: "/api",
+						method: 'POST',
+						data: data
+					})
+					.done(function(result) {
+						console.log(result);
+						var data = JSON.stringify(result, null, 4);
+
+						$('#res').html('<div class="alert alert-success col-12" role="alert">API Results<\/div>\
+          <div id="qresults" class="col-12 bg-white border border-secondary rounded">\
+          <br \/><pre>' + data + '<\/pre><\/div>');
+					})
+				return false;
+			}
+		</script>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
